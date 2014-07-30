@@ -34,9 +34,6 @@ public abstract class rrserver{
 		rrserverCRMS crms = new rrserverCRMS();
 		rrserverIRB irb = new rrserverIRB();
         Context context = ZMQ.context(1);       
-        
-        System.out.println(server);
-        System.out.println(args[1]);
         //  Socket to talk to clients
         Socket responder  = context.socket(ZMQ.REP);
         responder.connect(respond);     
@@ -54,9 +51,7 @@ public abstract class rrserver{
                 //reply = crms.start(string);
                 //crms.reset();
                 //reply = auth.start(string);//converts the string
-                //auth.reset();
-            	
-            	
+                //auth.reset();    	
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();

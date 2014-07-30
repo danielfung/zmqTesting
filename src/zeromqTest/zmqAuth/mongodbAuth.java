@@ -9,8 +9,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
-public class mongodbAuth {
-	
+public class mongodbAuth {	
 	static jacksonMapperAuth map = new jacksonMapperAuth();
 	private String readers = "readers";
 	private String editors = "editors";
