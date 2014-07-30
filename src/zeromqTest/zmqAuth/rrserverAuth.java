@@ -41,8 +41,7 @@ public class rrserverAuth extends rrserver{
 	public String start(String request) throws InterruptedException, IOException{
 	      //  Wait for next request from client
         String string = request;       
-        String resultString = convertString(string);
-        
+        String resultString = convertString(string);     
         System.out.println("Received request: ["+string+"].");        
         //need to get mongodb up(studies collection)
 		@SuppressWarnings("unused")
