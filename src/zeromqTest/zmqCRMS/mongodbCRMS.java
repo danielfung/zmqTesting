@@ -16,10 +16,8 @@ public class mongodbCRMS {
 	rrserverCRMS _activityFinder = new rrserverCRMS();
 	
 	@SuppressWarnings("unused")
-	public void findEntity(String json, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{
-		
+	public void findEntity(String json, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{		
 		if(inputActivityList == "yes" && inputIrbList == "no"){
-			
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -29,14 +27,12 @@ public class mongodbCRMS {
 				activities = rootNode.findPath("customAttributes");
 				_activityFinder.addElementsActivity(activities.asText());
 			}
-
 		}
 		
 		if(inputIrbList == "yes" && inputActivityList == "no"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
-			rootNode = mapper.readTree(json);
-			
+			rootNode = mapper.readTree(json);		
 			JsonNode _arms = null;
 			for(final JsonNode element: rootNode){
 				_arms = rootNode.findPath("arms");
@@ -66,8 +62,7 @@ public class mongodbCRMS {
 			rootNode = mapper.readTree(json);
 			JsonNode id = rootNode.findPath("id");
 			_activityFinder.addElementRelatedStudies(id.asText());
-		}
-		
+		}	
 	}
 	
 	public mongodbCRMS(String database, String Collection, String test, String id, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{	
@@ -75,19 +70,16 @@ public class mongodbCRMS {
 		Mongo mongodb = new Mongo("10.137.101.80", 27017);
 		DB db = mongodb.getDB(database);//which database
 		DBCollection collection = db.getCollection(Collection);//what collection to read
-
+		
 				BasicDBObject _idField = new BasicDBObject(id, test);
-
 				DBCursor cursor = collection.find(_idField);
 				while(cursor.hasNext()){
 					DBObject o = cursor.next();
 					testId = o.toString();
 					if(testId != null){
-						findEntity(testId, inputActivityList, inputIrbList);//testing
-						
+						findEntity(testId, inputActivityList, inputIrbList);//testing					
 					}
 				}
 				mongodb.close();
 	}
-	
 }

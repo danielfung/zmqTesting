@@ -50,7 +50,7 @@ public class mongodbIRB {
 		Mongo mongodb = new Mongo("10.137.101.80", 27017);
 		DB db = mongodb.getDB(database);//which database
 		DBCollection collection = db.getCollection(Collection);//what collection to read
-
+		
 				BasicDBObject _idField = new BasicDBObject(id, test);
 				//do a query to find a specific id
 				DBCursor cursor = collection.find(_idField);
