@@ -43,14 +43,13 @@ public class rrserverAuth extends rrserver{
         String string = request;       
         String resultString = convertString(string);     
         System.out.println("Received request: ["+string+"].");        
-        //need to get mongodb up(studies collection)
+        
 		@SuppressWarnings("unused")
 		mongodbAuth mongo = new mongodbAuth(database, collection, resultString);
 		jacksonMapperAuth map = new jacksonMapperAuth();
 		if(map.getStudiesList().isEmpty()){
 			this.studiesString = "Person "+resultString+" has no studies or does not exist";
-		}
-		
+		}	
 		//get a list of all studies with permissions all in 1 string
 		//ex){"com.webridge.entity.Entity:F1C77BB104AF054C999D44ED2AE49C0E":"010",...}
 		/* Permissions:
