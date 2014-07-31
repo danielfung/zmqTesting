@@ -19,8 +19,6 @@ public abstract class rrclient{
         Socket requester = context.socket(ZMQ.REQ);
         requester.connect(request);
         System.out.println("launch and connect client.");
-   
-        //String testId = "i13-00747";
         //com.webridge.account.Person[OID[04703945D4509F42837E8561B0556F18]]
         //c11-00220
         //i13-00747, i1444
