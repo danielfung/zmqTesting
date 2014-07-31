@@ -46,12 +46,18 @@ public abstract class rrserver{
             String reply = null;
             System.out.println("Received request: ["+string+"].");
             try {
-            	reply = irb.start(string);
-                irb.reset();
-                //reply = crms.start(string);
-                //crms.reset();
-                //reply = auth.start(string);//converts the string
-                //auth.reset();    	
+            	if(args[1].equals("irb")){//if irb
+                	reply = irb.start(string);
+                    irb.reset();
+            	}
+            	if(args[1].equals("crms")){//if crms
+                    reply = crms.start(string);
+                    crms.reset();
+            	}
+            	if(args[1].equals("auth")){//if auth
+                    reply = auth.start(string);//converts the string
+                    auth.reset();  
+            	}   	
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
