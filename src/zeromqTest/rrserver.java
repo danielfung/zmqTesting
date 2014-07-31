@@ -28,8 +28,8 @@ public abstract class rrserver{
 	abstract public void reset();
 	
 	public static void main (String[] args) throws IOException {
-		String respond = args[0];
-		String server = args[1];
+		String respond = args[0];//which port responder on
+		String server = args[1];//what store is the request using: irb/crms/auth
 		rrserverAuth auth = new rrserverAuth();
 		rrserverCRMS crms = new rrserverCRMS();
 		rrserverIRB irb = new rrserverIRB();
@@ -46,16 +46,16 @@ public abstract class rrserver{
             String reply = null;
             System.out.println("Received request: ["+string+"].");
             try {
-            	if(args[1].equals("irb")){//if irb
+            	if(server.equals("irb")){//if irb
                 	reply = irb.start(string);
                     irb.reset();
             	}
-            	if(args[1].equals("crms")){//if crms
+            	if(server.equals("crms")){//if crms
                     reply = crms.start(string);
                     crms.reset();
             	}
-            	if(args[1].equals("auth")){//if auth
-                    reply = auth.start(string);//converts the string
+            	if(server.equals("auth")){//if auth
+                    reply = auth.start(string);
                     auth.reset();  
             	}   	
                 Thread.sleep(1);
