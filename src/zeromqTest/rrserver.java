@@ -13,8 +13,7 @@ import zeromqTest.zmqIRB.rrserverIRB;
 * Connects REP socket to tcp://*:5560
 * Expects id from client, replies with list of studies
 */
-public abstract class rrserver{
-	
+public abstract class rrserver{	
 	protected String database;
 	protected String collection;
 	protected String studiesString;

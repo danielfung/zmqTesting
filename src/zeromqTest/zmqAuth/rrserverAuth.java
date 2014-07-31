@@ -65,5 +65,4 @@ public class rrserverAuth extends rrserver{
 		}
 		return this.studiesString; 
 	}
-
 }

@@ -8,7 +8,6 @@ import org.zeromq.ZMQ.Socket;
 *Simple request-reply broker
 */
 public class rrbroker{
-
     public static void main (String[] args) {
     	String frontendreceive = args[0];
     	String backendresponder = args[1];
