@@ -11,7 +11,7 @@ import zeromqTest.zmqIRB.rrserverIRB;
 /**
 * Server
 * Connects REP socket to tcp://*:5560
-* Expects person id from client, replies with list of studies
+* Expects id from client, replies with list of studies
 */
 public abstract class rrserver{
 	
