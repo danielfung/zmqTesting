@@ -20,6 +20,10 @@ public class rrserverIRB extends rrserver{
 	@SuppressWarnings("rawtypes")
 	private static ArrayList relatedStudies = new ArrayList();//storing all studies related to the "parent study" ex)i08-411 --> list of modifications/continuing review related to it.
 	
+	/*
+	 * resets all the variables to a specific database, collection, id, resultString, 
+	 * studiesString, inputActivityList, inputRelated Studies.
+	 */
 	public rrserverIRB(){
 		super();
 		this.database = "studies";
@@ -31,6 +35,16 @@ public class rrserverIRB extends rrserver{
 		this.inputRelatedStudies = "no";
 	}
 	
+	/*
+	 * For each item in the ArrayList test query for a specific field, based of the specific database and collection.
+	 * 
+	 * @param test                the array list in which the function will look in
+	 * @param database            which database to use from mongodb
+	 * @param collection          which collection to use from the database in mongodb
+	 * @param id                  which field within the collection
+	 * @param inputActivityList   decide whether to place into ActivityList(yes or no)
+	 * @param inputRelatedStudies decide whether to place into RelatedStudies(yes or no)
+	 */
 	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList, String inputRelatedStudiesList) throws JsonProcessingException, IOException{	
 		if(!test.isEmpty()){
 			for(int i = 0; i<test.size(); i++){
@@ -40,6 +54,12 @@ public class rrserverIRB extends rrserver{
 		}	
 	}
 	
+	/*
+	 * Given a study id, convert to irb id type.
+	 * 
+	 * @param item the study id that user wants to obtain related studies of
+	 * @return     returns the converted study id back to user
+	 */
 	@Override
 	public String convertString(String item) {
 		String resultString = item;
@@ -48,6 +68,10 @@ public class rrserverIRB extends rrserver{
 		return resultString;
 	}
 	
+	/*
+	 * Reset the variables(database, collection, id, resultString, studiesString, 
+	 * inputActivityList, inputRelatedStudies) to be able to query from irb
+	 */
 	@Override
 	public void reset() {
 		this.database = "studies";
@@ -59,6 +83,11 @@ public class rrserverIRB extends rrserver{
 		this.inputRelatedStudies = "no";		
 	}
 	
+	/*
+	 * Add an element into the irbRelatedStudies array list.
+	 * 
+	 * @param item the item to be added into irbRelatedStudies
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementsIrb(String item){
 		if(irbRelatedStudies.contains(item)){
@@ -68,6 +97,11 @@ public class rrserverIRB extends rrserver{
 		}
 	}
 	
+	/*
+	 * Add an element into the irbSubmission_id array list.
+	 * 
+	 * @param item the item to be added into irbSubmission_id
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementIrbParentStudy_id(String item){
 		if(irbSubmission_id.contains(item)){
@@ -77,6 +111,11 @@ public class rrserverIRB extends rrserver{
 		}
 	}
 	
+	/*
+	 * Add an element into the relatedStudies array list.
+	 * 
+	 * @param item the item to be added into relatedStudies
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementIrbRelatedStudies(String item){
 		if(relatedStudies.contains(item)){
@@ -85,7 +124,13 @@ public class rrserverIRB extends rrserver{
 			relatedStudies.add(item);
 		}
 	}
-
+	
+	/*
+	 * Takes a study id input and query mongodb for all studies related to the given study id.
+	 * 
+	 * @param request the study id the user wants to get all related studies of.
+	 * @return        list of related studies if study exists
+	 */
 	@Override
 	public String start(String request) throws InterruptedException, IOException {
 		reset();
