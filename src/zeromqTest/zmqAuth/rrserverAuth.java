@@ -40,6 +40,7 @@ public class rrserverAuth extends rrserver{
 	@Override
 	public String start(String request) throws InterruptedException, IOException{
 	    //  Wait for next request from client
+		reset();
         String string = request;       
         String resultString = convertString(string);     
         System.out.println("Received request: ["+string+"].");        

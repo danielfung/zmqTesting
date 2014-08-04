@@ -10,6 +10,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class rrserverCRMS extends rrserver {
 	
+	@SuppressWarnings("rawtypes")
+	private static ArrayList crmsCustomAttribute = new ArrayList(); //store the custom attribute of CRMS
+	@SuppressWarnings("rawtypes")
+	private static ArrayList crmsARM = new ArrayList();//list of relatedStudies(_clinicaltrialarms)
+	@SuppressWarnings("rawtypes")
+	private static ArrayList crmsBUDGET = new ArrayList();//list of relatedSstudies(_clinicaltrialbudget) - found in  _clinicaltrial_customattributesmanagers
+	@SuppressWarnings("rawtypes")
+	private static ArrayList relatedStudies = new ArrayList();//storing all studies(budget/arm) related to the "parent study"
+	
 	public rrserverCRMS(){
 		super();
 		this.database = "studies";
@@ -49,16 +58,7 @@ public class rrserverCRMS extends rrserver {
 			}
 		}	
 	}
-	
-	@SuppressWarnings("rawtypes")
-	private static ArrayList crmsCustomAttribute = new ArrayList(); //store the custom attribute of CRMS
-	@SuppressWarnings("rawtypes")
-	private static ArrayList crmsARM = new ArrayList();//list of relatedStudies(_clinicaltrialarms)
-	@SuppressWarnings("rawtypes")
-	private static ArrayList crmsBUDGET = new ArrayList();//list of relatedSstudies(_clinicaltrialbudget) - found in  _clinicaltrial_customattributesmanagers
-	@SuppressWarnings("rawtypes")
-	private static ArrayList relatedStudies = new ArrayList();//storing all studies(budget/arm) related to the "parent study"
-	
+
 	@SuppressWarnings("unchecked")
 	public void addElementsActivity(String item){
 		if(crmsCustomAttribute.contains(item)){
@@ -98,6 +98,7 @@ public class rrserverCRMS extends rrserver {
 	@Override
 	@SuppressWarnings("unchecked")
 	public String start(String request) throws JsonProcessingException, IOException{
+		reset();
 		studiesString = new String(request); 
     	studiesString = convertString(studiesString);
 		mongodbCRMS mongotest2 = new mongodbCRMS(database, collection, studiesString, id, inputActivityList, inputRelatedStudies);	

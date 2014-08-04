@@ -47,10 +47,48 @@ public class rrserverIRB extends rrserver{
 		resultString = "i"+resultString;
 		return resultString;
 	}
+	
+	@Override
+	public void reset() {
+		this.database = "studies";
+		this.collection = "_irbsubmissions";
+		this.id = "id";
+		this.resultString = null;
+		this.studiesString = null;
+		this.inputActivityList = "yes";
+		this.inputRelatedStudies = "no";		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addElementsIrb(String item){
+		if(irbRelatedStudies.contains(item)){
+		}
+		else{
+			irbRelatedStudies.add(item);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addElementIrbParentStudy_id(String item){
+		if(irbSubmission_id.contains(item)){
+		}
+		else{
+			irbSubmission_id.add(item);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addElementIrbRelatedStudies(String item){
+		if(relatedStudies.contains(item)){
+		}
+		else{
+			relatedStudies.add(item);
+		}
+	}
 
 	@Override
-	public String start(String request) throws InterruptedException,
-			IOException {
+	public String start(String request) throws InterruptedException, IOException {
+		reset();
 		studiesString = request;
 		studiesString = convertString(studiesString);
 		inputActivityList = "yes";
@@ -96,43 +134,5 @@ public class rrserverIRB extends rrserver{
 		irbRelatedStudies.clear();
 		irbSubmission_id.clear();
 		return resultString;
-	}
-
-	@Override
-	public void reset() {
-		this.database = "studies";
-		this.collection = "_irbsubmissions";
-		this.id = "id";
-		this.resultString = null;
-		this.studiesString = null;
-		this.inputActivityList = "yes";
-		this.inputRelatedStudies = "no";		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void addElementsIrb(String item){
-		if(irbRelatedStudies.contains(item)){
-		}
-		else{
-			irbRelatedStudies.add(item);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void addElementIrbParentStudy_id(String item){
-		if(irbSubmission_id.contains(item)){
-		}
-		else{
-			irbSubmission_id.add(item);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void addElementIrbRelatedStudies(String item){
-		if(relatedStudies.contains(item)){
-		}
-		else{
-			relatedStudies.add(item);
-		}
 	}
 }
