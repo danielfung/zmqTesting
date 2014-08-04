@@ -21,7 +21,7 @@ public class rrserverIRB extends rrserver{
 	private static ArrayList relatedStudies = new ArrayList();//storing all studies related to the "parent study" ex)i08-411 --> list of modifications/continuing review related to it.
 	
 	/*
-	 * resets all the variables to a specific database, collection, id, resultString, 
+	 * the constructor, set the variables to a specific database, collection, id, resultString, 
 	 * studiesString, inputActivityList, inputRelated Studies.
 	 */
 	public rrserverIRB(){

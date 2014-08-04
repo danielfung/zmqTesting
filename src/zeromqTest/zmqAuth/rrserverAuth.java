@@ -10,6 +10,9 @@ import zeromqTest.rrserver;
 
 public class rrserverAuth extends rrserver{
 	
+	/*
+	 * the constructor, set the variables to a specific database, collection, studiesString.
+	 */
 	public rrserverAuth(){
 		super();
 		this.database = "xtudies";
@@ -17,6 +20,9 @@ public class rrserverAuth extends rrserver{
 		this.studiesString = null;
 	}
 	
+	/*
+	 * Reset the variables(database, collection, studiesString) to be able to query from irb.
+	 */
 	@Override
 	public void reset(){
 		this.database = "xtudies";
@@ -24,6 +30,12 @@ public class rrserverAuth extends rrserver{
 		this.studiesString = null;
 	}
 	
+	/*
+	 * Given a person id, convert to person id type(remove OID).
+	 * 
+	 * @param item the person id that user wants to obtain related studies of
+	 * @return     returns the converted person id back to user
+	 */
 	@Override
 	public String convertString(String item){
 		String resultString = null;
@@ -37,6 +49,12 @@ public class rrserverAuth extends rrserver{
 		return resultString;
 	}
 	
+	/*
+	 * Takes a person id input and query mongodb for all studies related to the given person id.
+	 * 
+	 * @param request the person id that is provided to retrieve all studies related to person id
+	 * @return        list of related studies if person id exists
+	 */
 	@Override
 	public String start(String request) throws InterruptedException, IOException{
 		reset();
