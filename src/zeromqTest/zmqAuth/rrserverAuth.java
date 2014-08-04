@@ -42,7 +42,6 @@ public class rrserverAuth extends rrserver{
 		reset();
         String string = request;       
         String resultString = convertString(string);     
-        System.out.println("Received request: ["+string+"].");        
         
 		@SuppressWarnings("unused")
 		mongodbAuth mongo = new mongodbAuth(database, collection, resultString);
