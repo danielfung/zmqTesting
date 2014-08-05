@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import zeromqTest.zmqIRB.rrserverIRB;
+import main.java.zmqirb.rrserverIRB;
 
 public class assertionTestIRB {
 

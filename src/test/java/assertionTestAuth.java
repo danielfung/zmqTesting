@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import zeromqTest.zmqAuth.rrserverAuth;
+import main.java.zmqauth.rrserverAuth;
 
 public class assertionTestAuth {
 
