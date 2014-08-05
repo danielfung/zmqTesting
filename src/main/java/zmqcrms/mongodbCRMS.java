@@ -15,9 +15,16 @@ import com.mongodb.Mongo;
 public class mongodbCRMS {	
 	rrserverCRMS _activityFinder = new rrserverCRMS();
 	
+	/*
+	 * Given a json record, find all fields and extract it. Once extracted add to arraylist
+	 * 
+	 * @param json an json string
+	 * @param inputActivityList decide whether to place into inputActivityList(yes or no)
+	 * @param inputCrmsList      decide whether to place into inputIrbList(yes or no)
+	 */
 	@SuppressWarnings("unused")
-	public void findEntity(String json, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{		
-		if(inputActivityList == "yes" && inputIrbList == "no"){
+	public void findEntity(String json, String inputActivityList, String inputCrmsList) throws JsonProcessingException, IOException{		
+		if(inputActivityList == "yes" && inputCrmsList == "no"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -29,7 +36,7 @@ public class mongodbCRMS {
 			}
 		}
 		
-		if(inputIrbList == "yes" && inputActivityList == "no"){
+		if(inputCrmsList == "yes" && inputActivityList == "no"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);		
@@ -56,7 +63,7 @@ public class mongodbCRMS {
 			}		
 		}
 		
-		if(inputIrbList == "no" && inputActivityList == "no"){
+		if(inputCrmsList == "no" && inputActivityList == "no"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -65,21 +72,32 @@ public class mongodbCRMS {
 		}	
 	}
 	
-	public mongodbCRMS(String database, String Collection, String test, String id, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{	
+	/*
+	 * Establish mongodb connection and query specific records based on 
+	 * database, collection and id(field).
+	 * 
+	 * @param database          which database to access in mongodb
+	 * @param Collection        which collection to access in mongodb
+	 * @param test	            the field(data) to find in mongodb
+	 * @param id                the field to access in mongodb
+	 * @param inputActivityList decide if anything should be placed into inputActivitiyList(yes or no)
+	 * @param inputCrmsList     decide if anything should be placed into inputCrmsList(yes or no)
+	 */
+	public mongodbCRMS(String database, String Collection, String test, String id, String inputActivityList, String inputCrmsList) throws JsonProcessingException, IOException{	
 		String testId = null;
 		Mongo mongodb = new Mongo("10.137.101.80", 27017);
 		DB db = mongodb.getDB(database);//which database
 		DBCollection collection = db.getCollection(Collection);//what collection to read
 		
-				BasicDBObject _idField = new BasicDBObject(id, test);
-				DBCursor cursor = collection.find(_idField);
-				while(cursor.hasNext()){
-					DBObject o = cursor.next();
-					testId = o.toString();
-					if(testId != null){
-						findEntity(testId, inputActivityList, inputIrbList);//testing					
-					}
+		BasicDBObject _idField = new BasicDBObject(id, test);
+		DBCursor cursor = collection.find(_idField);
+			while(cursor.hasNext()){
+				DBObject o = cursor.next();
+				testId = o.toString();
+				if(testId != null){
+					findEntity(testId, inputActivityList, inputCrmsList);//testing					
 				}
-				mongodb.close();
+			}
+		mongodb.close();
 	}
 }
