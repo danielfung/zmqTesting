@@ -19,6 +19,10 @@ public class rrserverCRMS extends rrserver {
 	@SuppressWarnings("rawtypes")
 	private static ArrayList relatedStudies = new ArrayList();//storing all studies(budget/arm) related to the "parent study"
 	
+	/*
+	 * the constructor, set the variables to a specific database, collection, id, resultString, 
+	 * studiesString, inputActivityList, inputRelated Studies.
+	 */
 	public rrserverCRMS(){
 		super();
 		this.database = "studies";
@@ -29,7 +33,10 @@ public class rrserverCRMS extends rrserver {
 		this.id = "id";
 		this.resultString = null;
 	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see zeromqTest.rrserver#reset()
+	 */
 	@Override
 	public void reset(){
 		this.database = "studies";
