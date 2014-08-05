@@ -33,9 +33,29 @@ public class rrserverCRMS extends rrserver {
 		this.id = "id";
 		this.resultString = null;
 	}
+	
 	/*
-	 * (non-Javadoc)
-	 * @see zeromqTest.rrserver#reset()
+	 * For each item in the ArrayList test query for a specific field, based of the specific database and collection.
+	 * 
+	 * @param test                    the array list in which the function will look in
+	 * @param database                which database to use from mongodb
+	 * @param collection              which collection to use from the database in mongodb
+	 * @param id                      which field within the collection
+	 * @param inputActivityList       decide whether to place into ActivityList(yes or no)
+	 * @param inputRelatedStudiesList decide whether to place into relatedStudies(yes or no)
+	 */
+	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList, String inputRelatedStudiesList) throws JsonProcessingException, IOException{	
+		if(!test.isEmpty()){
+			for(int i = 0; i<test.size(); i++){
+				String arm = (String) test.get(i);
+				mongodbCRMS mongotest = new mongodbCRMS(database, collection, arm, id, inputActivityList, inputRelatedStudiesList);	
+			}
+		}	
+	}
+	
+	/*
+	 * Reset the variables(database, collection, id, resultString, studiesString, 
+	 * inputActivityList, inputRelatedStudies) to be able to query from irb
 	 */
 	@Override
 	public void reset(){
@@ -48,6 +68,12 @@ public class rrserverCRMS extends rrserver {
 		this.resultString = null;
 	}
 	
+	/*
+	 * Given a study id, convert to crms id type.
+	 * 
+	 * @param item the study id that user wants to obtain related arms/budget of
+	 * @return     returns the converted study id back
+	 */
 	@Override
 	public String convertString(String item){
 		String resultString = null;
@@ -57,24 +83,25 @@ public class rrserverCRMS extends rrserver {
 		return resultString;
 	}
 	
-	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList, String inputRelatedStudiesList) throws JsonProcessingException, IOException{	
-		if(!test.isEmpty()){
-			for(int i = 0; i<test.size(); i++){
-				String arm = (String) test.get(i);
-				mongodbCRMS mongotest = new mongodbCRMS(database, collection, arm, id, inputActivityList, inputRelatedStudiesList);	
-			}
-		}	
-	}
-
+	/*
+	 * Add an element into crmsCustomAttribute arraylist
+	 * 
+	 * @param item the item to be added into crmsCustomAttribute arraylist
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementsActivity(String item){
 		if(crmsCustomAttribute.contains(item)){
 		}
 		else{
-		crmsCustomAttribute.add(item);
+			crmsCustomAttribute.add(item);
 		}
 	}
 	
+	/*
+	 * Add an element into crmsBUDGET arraylist
+	 * 
+	 * @param item the item to be added into crmsBUDGET arraylist
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementBudget(String item){
 		if(crmsBUDGET.contains(item)){
@@ -84,6 +111,11 @@ public class rrserverCRMS extends rrserver {
 		}
 	}
 	
+	/*
+	 * add an element into crmsARM arraylist
+	 * 
+	 * @param item the item to be added into crmsARM arraylist
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementArm(String item){
 		if(crmsARM.contains(item))	{
@@ -93,6 +125,11 @@ public class rrserverCRMS extends rrserver {
 		}
 	}
 	
+	/*
+	 * add an element into relatedStudies arraylist
+	 * 
+	 * @param item the item to be added into relatedStudies arraylist
+	 */
 	@SuppressWarnings("unchecked")
 	public void addElementRelatedStudies(String item){
 		if(relatedStudies.contains(item)){
@@ -102,6 +139,12 @@ public class rrserverCRMS extends rrserver {
 		}
 	}
 	
+	/*
+	 * Takes a study id input and query mongodb for all related arms/budgets.
+	 * 
+	 * @param request the study id the user wants to get all related studies of.
+	 * @return        list of related related arms/budgets if study exists
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public String start(String request) throws JsonProcessingException, IOException{

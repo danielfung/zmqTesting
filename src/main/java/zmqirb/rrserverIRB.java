@@ -55,7 +55,7 @@ public class rrserverIRB extends rrserver{
 	 * Given a study id, convert to irb id type.
 	 * 
 	 * @param item the study id that user wants to obtain related studies of
-	 * @return     returns the converted study id back to user
+	 * @return     returns the converted study id back
 	 */
 	@Override
 	public String convertString(String item) {
