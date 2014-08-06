@@ -12,17 +12,19 @@ import main.java.zmqirb.rrserverIRB;
 
 public class assertionTestIRB {
 
+	private rrserverIRB tester;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@Before
 	public void setUp() throws Exception {
+		tester = new rrserverIRB();
 	}
 
 	@Test
 	public void test(){
-		rrserverIRB tester = new rrserverIRB();
 		String irbIdtest = "S1444";
 		String fakeirbIdtest = "S1444111";
 		//testing convertString
@@ -32,17 +34,16 @@ public class assertionTestIRB {
 	
 	@Test
 	public void testFakePersonId() throws InterruptedException, IOException{
-		rrserverIRB tester = new rrserverIRB();
 		String fakeirbIdtest = "S144412";
 		String fakeirbIdconverted = "i144412";
 		//testing if person does not exist
 		String noStudyResult = "Study: "+fakeirbIdconverted+" related studies not found!";
+		tester.reset();
 		assertEquals("equal", noStudyResult, tester.start(fakeirbIdtest));
 	}
 	
 	@Test
 	public void testPersonId() throws InterruptedException, IOException{
-		rrserverIRB tester = new rrserverIRB();
 		String irbIdtest = "S1444";
 		String result = tester.start("i1444");
 		tester.reset();

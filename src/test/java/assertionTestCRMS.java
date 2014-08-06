@@ -12,17 +12,19 @@ import main.java.zmqcrms.rrserverCRMS;
 
 public class assertionTestCRMS {
 
+	private rrserverCRMS tester;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@Before
 	public void setUp() throws Exception {
+		tester = new rrserverCRMS();
 	}
 
 	@Test
 	public void test(){
-		rrserverCRMS tester = new rrserverCRMS();
 		String crmsIdtest = "c11-00220";
 		String fakecrmsIdtest = "S11-002200";
 		//testing convertString
@@ -32,17 +34,16 @@ public class assertionTestCRMS {
 	
 	@Test
 	public void testFakePersonId() throws InterruptedException, IOException{
-		rrserverCRMS tester = new rrserverCRMS();
 		String fakecrmsIdtest = "S11-002220";
 		String fakecrmsIdconverted = "c11-002220";
 		//testing if person does not exist
 		String noStudyResult = "Study: "+fakecrmsIdconverted+" related studies not found!";
+		tester.reset();
 		assertEquals("equal", noStudyResult, tester.start(fakecrmsIdtest));
 	}
 	
 	@Test
 	public void testPersonId() throws InterruptedException, IOException{
-		rrserverCRMS tester = new rrserverCRMS();
 		String crmsIdtest = "S11-00220";
 		String result = tester.start(crmsIdtest);
 		tester.reset();
