@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import main.java.zmqirb.rrserverIRB;
 
-public class assertionTestIRB {
+public class assertionIRBTest {
 
 	private rrserverIRB tester;
 	

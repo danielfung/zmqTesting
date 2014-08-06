@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import main.java.zmqcrms.rrserverCRMS;
 
-public class assertionTestCRMS {
+public class assertionCRMSTest {
 
 	private rrserverCRMS tester;
 	
