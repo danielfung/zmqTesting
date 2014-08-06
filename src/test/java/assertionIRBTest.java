@@ -23,6 +23,9 @@ public class assertionIRBTest {
 		tester = new rrserverIRB();
 	}
 
+	/*
+	 *Testing to ensure person id are converted properly through the convertString method of rrserverAuth.
+	 */
 	@Test
 	public void test(){
 		String irbIdtest = "S1444";
@@ -32,6 +35,9 @@ public class assertionIRBTest {
 		assertEquals("equal", "i1444111", tester.convertString(fakeirbIdtest));
 	}
 	
+	/*
+	 *Testing to ensure that a non-existent study id(irb) returns nothing.  
+	 */
 	@Test
 	public void testFakePersonId() throws InterruptedException, IOException{
 		String fakeirbIdtest = "S144412";
@@ -42,6 +48,9 @@ public class assertionIRBTest {
 		assertEquals("equal", noStudyResult, tester.start(fakeirbIdtest));
 	}
 	
+	/*
+	 * Testing to ensure the result are the same.
+	 */
 	@Test
 	public void testPersonId() throws InterruptedException, IOException{
 		String irbIdtest = "S1444";
@@ -49,5 +58,4 @@ public class assertionIRBTest {
 		tester.reset();
 		assertEquals("equal", result, tester.start(irbIdtest));
 	}
-
 }

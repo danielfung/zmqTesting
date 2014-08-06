@@ -22,6 +22,9 @@ public class assertionAuthTest {
 			tester = new rrserverAuth();
 	}
 	
+	/*
+	 *Testing to ensure person id are converted properly through the convertString method of rrserverAuth.
+	 */
 	@Test
 	public void test(){
 		String personIdtest = "com.webridge.account.Person[OID[04703945D4509F42837E8561B0556F18]]";
@@ -31,6 +34,9 @@ public class assertionAuthTest {
 		assertEquals("equal", "com.webridge.account.Person:04703945D4509F42837E8561B0556F181", tester.convertString(fakepersonIdtest));
 	}
 	
+	/*
+	 *Testing to ensure that a non-existent person id returns nothing.  
+	 */
 	@Test
 	public void testFakePersonId() throws InterruptedException, IOException{
 		String fakepersonIdtest = "com.webridge.account.Person[OID[04703945D4509F42837E8561B0556F181]]";
@@ -41,6 +47,9 @@ public class assertionAuthTest {
 		assertEquals("equal", noStudyResult, tester.start(fakepersonIdtest));
 	}
 	
+	/*
+	 * Testing to ensure the result are the same.
+	 */
 	@Test
 	public void testPersonId() throws InterruptedException, IOException{
 		String personIdtest = "com.webridge.account.Person[OID[04703945D4509F42837E8561B0556F18]]";	
@@ -49,5 +58,4 @@ public class assertionAuthTest {
 		String result = tester.start(personIdtest);
 		assertEquals("equal", result, tester.start(personIdtest));
 	}
-
 }

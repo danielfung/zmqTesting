@@ -23,6 +23,9 @@ public class assertionCRMSTest {
 		tester = new rrserverCRMS();
 	}
 
+	/*
+	 *Testing to ensure person id are converted properly through the convertString method of rrserverAuth.
+	 */
 	@Test
 	public void test(){
 		String crmsIdtest = "c11-00220";
@@ -32,6 +35,9 @@ public class assertionCRMSTest {
 		assertEquals("equal", "c11-002200", tester.convertString(fakecrmsIdtest));
 	}
 	
+	/*
+	 *Testing to ensure that a non-existent study id(irb) returns nothing.  
+	 */
 	@Test
 	public void testFakePersonId() throws InterruptedException, IOException{
 		String fakecrmsIdtest = "S11-002220";
@@ -42,12 +48,14 @@ public class assertionCRMSTest {
 		assertEquals("equal", noStudyResult, tester.start(fakecrmsIdtest));
 	}
 	
+	/*
+	 * Testing to ensure the result are the same.
+	 */
 	@Test
 	public void testPersonId() throws InterruptedException, IOException{
 		String crmsIdtest = "S11-00220";
-		String result = tester.start(crmsIdtest);
+		String result = tester.start("c11-00220");
 		tester.reset();
 		assertEquals("equal", result, tester.start(crmsIdtest));
 	}
-
 }
