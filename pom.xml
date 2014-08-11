@@ -59,6 +59,8 @@
   		<groupId>zmq</groupId>
   		<artifactId>zmq</artifactId>
   		<version>0.0.1</version>
+  		<scope>system</scope>
+  		<systemPath>/usr/local/share/java/zmq.jar</systemPath>
   	</dependency>
   </dependencies>
 </project>
