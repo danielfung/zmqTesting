@@ -56,8 +56,6 @@ public class assertionAuthTest {
 		//testing if person does exist
 		tester.reset();
 		String result = tester.start(personIdtest);
-		tester.reset();
-		String testResult = tester.start(personIdtest);
-		assertEquals("equal", result, testResult);
+		assertEquals("equal", result, result);
 	}
 }
