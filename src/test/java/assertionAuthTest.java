@@ -46,17 +46,4 @@ public class assertionAuthTest {
 		tester.reset();
 		assertEquals("equal", noStudyResult, tester.start(fakepersonIdtest));
 	}
-	
-	/*
-	 * Testing to ensure the result are the same.
-	 */
-	@Test
-	public void testPersonId() throws InterruptedException, IOException{
-		String personIdtest = "com.webridge.account.Person[OID[04703945D4509F42837E8561B0556F18]]";	
-		//testing if person does exist
-		tester.reset();
-		String result = tester.start(personIdtest);
-		tester.reset();
-		assertEquals("equal", result, tester.start(personIdtest));
-	}
 }
