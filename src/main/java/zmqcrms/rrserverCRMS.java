@@ -18,7 +18,12 @@ public class rrserverCRMS extends rrserver {
 	private static ArrayList crmsBUDGET = new ArrayList();//list of relatedSstudies(_clinicaltrialbudget) - found in  _clinicaltrial_customattributesmanagers
 	@SuppressWarnings("rawtypes")
 	private static ArrayList relatedStudies = new ArrayList();//storing all studies(budget/arm) related to the "parent study"
-	
+	@SuppressWarnings("rawtypes")
+	private static ArrayList participantId = new ArrayList();//stores all participantId(_participants) - found in _participantrecord_customattributesmangers
+	@SuppressWarnings("rawtypes")
+	private static ArrayList participantCustomAttribute = new ArrayList();//stores all participantCustomAttributes - found in _participants
+	@SuppressWarnings("rawtypes")
+	private static ArrayList relatedParticipants = new ArrayList();//list of all related participants of this study - found in _participant_customattributesmanagers
 	/*
 	 * the constructor, set the variables to a specific database, collection, id, resultString, 
 	 * studiesString, inputActivityList, inputRelated Studies.
@@ -138,6 +143,47 @@ public class rrserverCRMS extends rrserver {
 	}
 	
 	/*
+	 * add an element into relatedParticipants arraylist
+	 * 
+	 * @param item the item to be added into relatedParticipants arraylist
+	 */
+	@SuppressWarnings("unchecked")
+	public void addElementRelatedParticipant(String item){
+		if(relatedParticipants.contains(item)){
+		}
+		else{
+			relatedParticipants.add(item);
+		}
+	}
+	
+	/*
+	 * add an element into participantCustomAttribute arraylist
+	 * 
+	 * @param item the item to be added into participantCustomAttribute arraylist
+	 */
+	@SuppressWarnings("unchecked")
+	public void addElementParticipantCustomAttribute(String item){
+		if(participantCustomAttribute.contains(item)){
+		}
+		else{
+			participantCustomAttribute.add(item);
+		}
+	}
+	
+	/*
+	 * add an element into participantId arraylist
+	 * 
+	 * @param item the item to be added into participantId arraylist
+	 */
+	@SuppressWarnings("unchecked")
+	public void addElementParticipant(String item){
+		if(participantId.contains(item)){
+		}
+		else{
+			participantId.add(item);
+		}
+	}
+	/*
 	 * Takes a study id input and query mongodb for all related arms/budgets.
 	 * 
 	 * @param request the study id the user wants to get all related studies of.
@@ -165,6 +211,26 @@ public class rrserverCRMS extends rrserver {
 		id = "_id";
 		inputListName = "relatedStudies";
 		searchArray(crmsBUDGET, database, collection, id, inputListName);
+		
+		collection = "_participantrecord_customattributesmanagers";
+		id = "visitSchedule";
+		inputListName = "participantList";
+		for(int i = 0; i<crmsARM.size(); i++){
+			String arm = (String) crmsARM.get(i);
+			participantFinderCRMS partFind = new participantFinderCRMS();
+			arm = partFind.convertString(arm);
+			mongodbCRMS mongotest = new mongodbCRMS(database, collection, arm, id, inputListName);	
+		}
+		
+		collection = "_participants";
+		id = "_id";
+		inputListName = "participantCustomAttributeList";
+		searchArray(participantId, database, collection, id, inputListName);
+		
+		collection = "_participant_customattributesmanagers";
+		id = "_id";
+		inputListName = "relatedParticipantList";
+		searchArray(participantCustomAttribute, database, collection, id, inputListName);
 		   		
 		Collections.sort(relatedStudies);
 		if(!relatedStudies.isEmpty()){
@@ -173,7 +239,7 @@ public class rrserverCRMS extends rrserver {
 				String crms_id = (String) relatedStudies.get(i);
 				if(i == relatedStudies.size()-1 && resultString != null)
 				{
-					resultString += '"'+crms_id+'"';
+					resultString += '"'+crms_id+'"'+",";
 				}
 				else if( i != relatedStudies.size()-1 && resultString != null)
 				{
@@ -181,6 +247,21 @@ public class rrserverCRMS extends rrserver {
 				}
 				else if(resultString == null && relatedStudies.size() != 1){
 					resultString = '"'+crms_id+'"'+",";
+				}
+				else{
+					resultString = '"'+crms_id+'"';
+				}
+			}
+			
+			for(int i = 0; i<relatedParticipants.size(); i++){
+				String crms_id = (String) relatedParticipants.get(i);
+				if(i == relatedParticipants.size()-1 && resultString != null)
+				{
+					resultString += '"'+crms_id+'"';
+				}
+				else if( i != relatedParticipants.size()-1 && resultString != null)
+				{
+					resultString += '"'+crms_id+'"'+",";
 				}
 				else{
 					resultString = '"'+crms_id+'"';
@@ -194,6 +275,9 @@ public class rrserverCRMS extends rrserver {
         crmsARM.clear();
         crmsBUDGET.clear();  
         relatedStudies.clear();
+        participantId.clear();
+        participantCustomAttribute.clear();
+        relatedParticipants.clear();
 		return resultString;
 	}
 }

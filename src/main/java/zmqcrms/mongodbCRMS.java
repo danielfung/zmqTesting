@@ -70,6 +70,30 @@ public class mongodbCRMS {
 			JsonNode id = rootNode.findPath("id");
 			_activityFinder.addElementRelatedStudies(id.asText());
 		}	
+		
+		if(inputWhichList == "participantList"){
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootNode = null;
+			rootNode = mapper.readTree(json);
+			JsonNode id = rootNode.findPath("participant");
+			_activityFinder.addElementParticipant(id.asText());
+		}
+		
+		if(inputWhichList == "participantCustomAttributeList"){
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootNode = null;
+			rootNode = mapper.readTree(json);
+			JsonNode id = rootNode.findPath("customAttributes");
+			_activityFinder.addElementParticipantCustomAttribute(id.asText());	
+		}
+		
+		if(inputWhichList == "relatedParticipantList"){
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootNode = null;
+			rootNode = mapper.readTree(json);
+			JsonNode id = rootNode.findPath("person");
+			_activityFinder.addElementRelatedParticipant(id.asText());	
+		}
 	}
 	
 	/*
