@@ -22,8 +22,8 @@ public class mongodbIRB {
 	 * @param inputIrbList      decide whether to place into inputIrbList(yes or no)
 	 */
 	@SuppressWarnings("unused")
-	public void findEntity(String json, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{	
-		if(inputActivityList == "yes" && inputIrbList == "no"){			
+	public void findEntity(String json, String inputWhichList) throws JsonProcessingException, IOException{	
+		if(inputWhichList == "irbSubmission_id"){			
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);			
@@ -34,7 +34,7 @@ public class mongodbIRB {
 			}			
 		}
 		
-		if(inputIrbList == "yes" && inputActivityList == "no"){
+		if(inputWhichList == "irbRelatedStudies"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);			
@@ -42,7 +42,7 @@ public class mongodbIRB {
 			_rrserver.addElementsIrb(_id.asText());			
 		}
 		
-		if(inputIrbList == "no" && inputActivityList == "no"){
+		if(inputWhichList == "relatedStudies"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -62,7 +62,7 @@ public class mongodbIRB {
 	 * @param inputActivityList decide whether to place into inputActivityList(yes or no)
 	 * @param inputIrbList      decide whether to place into inputIrbList(yes or no)
 	 */
-	public mongodbIRB(String database, String collection, String test, String id, String inputActivityList, String inputIrbList) throws JsonProcessingException, IOException{	
+	public mongodbIRB(String database, String collection, String test, String id, String inputWhichList) throws JsonProcessingException, IOException{	
 		String testId = null;
 		//Mongo mongodb = new Mongo();//local machine's mongodb
 		Mongo mongodb = new Mongo("10.137.101.80", 27017);
@@ -77,7 +77,7 @@ public class mongodbIRB {
 			DBObject o = cursor.next();
 			testId = o.toString();
 			if(testId != null){
-				findEntity(testId, inputActivityList, inputIrbList);//testing						
+				findEntity(testId, inputWhichList);//testing						
 			}
 		}
 		mongodb.close();

@@ -28,8 +28,7 @@ public class rrserverIRB extends rrserver{
 		this.id = "id";
 		this.resultString = null;
 		this.studiesString = null;
-		this.inputActivityList = "yes";
-		this.inputRelatedStudies = "no";
+		this.inputListName = "irbSubmission_id";
 	}
 	
 	/*
@@ -42,11 +41,11 @@ public class rrserverIRB extends rrserver{
 	 * @param inputActivityList   decide whether to place into ActivityList(yes or no)
 	 * @param inputRelatedStudies decide whether to place into RelatedStudies(yes or no)
 	 */
-	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList, String inputRelatedStudiesList) throws JsonProcessingException, IOException{	
+	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList) throws JsonProcessingException, IOException{	
 		if(!test.isEmpty()){
 			for(int i = 0; i<test.size(); i++){
 				String arm = (String) test.get(i);
-				mongodbIRB mongotest = new mongodbIRB(database, collection, arm, id, inputActivityList, inputRelatedStudiesList);	
+				mongodbIRB mongotest = new mongodbIRB(database, collection, arm, id, inputActivityList);	
 			}
 		}	
 	}
@@ -76,22 +75,7 @@ public class rrserverIRB extends rrserver{
 		this.id = "id";
 		this.resultString = null;
 		this.studiesString = null;
-		this.inputActivityList = "yes";
-		this.inputRelatedStudies = "no";		
-	}
-	
-	/*
-	 * Add an element into the irbRelatedStudies array list.
-	 * 
-	 * @param item the item to be added into irbRelatedStudies
-	 */
-	@SuppressWarnings("unchecked")
-	public void addElementsIrb(String item){
-		if(irbRelatedStudies.contains(item)){
-		}
-		else{
-			irbRelatedStudies.add(item);
-		}
+		this.inputListName = "irbSubmission_id";
 	}
 	
 	/*
@@ -105,6 +89,20 @@ public class rrserverIRB extends rrserver{
 		}
 		else{
 			irbSubmission_id.add(item);
+		}
+	}
+	
+	/*
+	 * Add an element into the irbRelatedStudies array list.
+	 * 
+	 * @param item the item to be added into irbRelatedStudies
+	 */
+	@SuppressWarnings("unchecked")
+	public void addElementsIrb(String item){
+		if(irbRelatedStudies.contains(item)){
+		}
+		else{
+			irbRelatedStudies.add(item);
 		}
 	}
 	
@@ -133,21 +131,17 @@ public class rrserverIRB extends rrserver{
 		reset();
 		studiesString = request;
 		studiesString = convertString(studiesString);
-		inputActivityList = "yes";
-		inputRelatedStudies = "no";
-		mongodbIRB mongotest2 = new mongodbIRB(database, collection, studiesString, id, inputActivityList, inputRelatedStudies);	
+		mongodbIRB mongotest2 = new mongodbIRB(database, collection, studiesString, id, inputListName);	
 
-		inputActivityList = "no";
-		inputRelatedStudies = "yes";
 		id = "parentStudy";
+		inputListName = "irbRelatedStudies";
 		collection = "_irbsubmission_customattributesmanagers";
-		searchArray(irbSubmission_id, database, collection, id, inputActivityList, inputRelatedStudies);
+		searchArray(irbSubmission_id, database, collection, id, inputListName);
 		     		
-		inputActivityList = "no";
-		inputRelatedStudies = "no";
 		id = "customAttributes";
 		collection = "_irbsubmissions";
-		searchArray(irbRelatedStudies, database, collection, id, inputActivityList, inputRelatedStudies);
+		inputListName = "relatedStudies";
+		searchArray(irbRelatedStudies, database, collection, id, inputListName);
 	      		
 		Collections.sort(relatedStudies);
 		if(!relatedStudies.isEmpty()){

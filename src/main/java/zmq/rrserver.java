@@ -17,10 +17,9 @@ public abstract class rrserver{
 	protected String database;
 	protected String collection;
 	protected String studiesString;
-	protected String inputActivityList;
-	protected String inputRelatedStudies;
 	protected String id;
 	protected String resultString;
+	protected String inputListName;
 	
 	abstract public String convertString(String item);
 	abstract public String start(String request) throws InterruptedException, IOException;

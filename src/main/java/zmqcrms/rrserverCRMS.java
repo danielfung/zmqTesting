@@ -28,10 +28,9 @@ public class rrserverCRMS extends rrserver {
 		this.database = "studies";
 		this.collection = "_clinicaltrials";
 		this.studiesString = null;
-		this.inputActivityList = "yes";
-		this.inputRelatedStudies = "no";
 		this.id = "id";
 		this.resultString = null;
+		this.inputListName = "crmsCustomAttribute";
 	}
 	
 	/*
@@ -44,11 +43,11 @@ public class rrserverCRMS extends rrserver {
 	 * @param inputActivityList       decide whether to place into ActivityList(yes or no)
 	 * @param inputRelatedStudiesList decide whether to place into relatedStudies(yes or no)
 	 */
-	public static void searchArray(ArrayList test,String database, String collection, String id, String inputActivityList, String inputRelatedStudiesList) throws JsonProcessingException, IOException{	
+	public static void searchArray(ArrayList test,String database, String collection, String id, String inputWhichList) throws JsonProcessingException, IOException{	
 		if(!test.isEmpty()){
 			for(int i = 0; i<test.size(); i++){
 				String arm = (String) test.get(i);
-				mongodbCRMS mongotest = new mongodbCRMS(database, collection, arm, id, inputActivityList, inputRelatedStudiesList);	
+				mongodbCRMS mongotest = new mongodbCRMS(database, collection, arm, id, inputWhichList);	
 			}
 		}	
 	}
@@ -62,10 +61,9 @@ public class rrserverCRMS extends rrserver {
 		this.database = "studies";
 		this.collection = "_clinicaltrials";
 		this.studiesString = null;
-		this.inputActivityList = "yes";
-		this.inputRelatedStudies = "no";
 		this.id = "id";
 		this.resultString = null;
+		this.inputListName = "crmsCustomAttribute";
 	}
 	
 	/*
@@ -151,25 +149,22 @@ public class rrserverCRMS extends rrserver {
 		reset();
 		studiesString = new String(request); 
     	studiesString = convertString(studiesString);
-		mongodbCRMS mongotest2 = new mongodbCRMS(database, collection, studiesString, id, inputActivityList, inputRelatedStudies);	
+		mongodbCRMS mongotest2 = new mongodbCRMS(database, collection, studiesString, id, inputListName);	
 		
 		collection = "_clinicaltrial_customattributesmanagers";
 		id = "_id";
-		inputActivityList = "no";
-		inputRelatedStudies = "yes";
-		searchArray(crmsCustomAttribute, database, collection, id, inputActivityList, inputRelatedStudies);
+		inputListName = "arms";
+		searchArray(crmsCustomAttribute, database, collection, id, inputListName);
 		
 		collection = "_clinicaltrialarms";
 		id = "_id";
-		inputActivityList = "no";
-		inputRelatedStudies = "no";
-		searchArray(crmsARM, database, collection, id, inputActivityList, inputRelatedStudies);
+		inputListName = "relatedStudies";
+		searchArray(crmsARM, database, collection, id, inputListName);
 		
 		collection = "_clinicaltrialcontracts";
 		id = "_id";
-		inputActivityList = "no";
-		inputRelatedStudies = "no";
-		searchArray(crmsBUDGET, database, collection, id, inputActivityList, inputRelatedStudies);
+		inputListName = "relatedStudies";
+		searchArray(crmsBUDGET, database, collection, id, inputListName);
 		   		
 		Collections.sort(relatedStudies);
 		if(!relatedStudies.isEmpty()){

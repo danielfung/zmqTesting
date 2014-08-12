@@ -23,8 +23,8 @@ public class mongodbCRMS {
 	 * @param inputCrmsList      decide whether to place into inputIrbList(yes or no)
 	 */
 	@SuppressWarnings("unused")
-	public void findEntity(String json, String inputActivityList, String inputCrmsList) throws JsonProcessingException, IOException{		
-		if(inputActivityList == "yes" && inputCrmsList == "no"){
+	public void findEntity(String json, String inputWhichList) throws JsonProcessingException, IOException{		
+		if(inputWhichList == "crmsCustomAttribute"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -36,7 +36,7 @@ public class mongodbCRMS {
 			}
 		}
 		
-		if(inputCrmsList == "yes" && inputActivityList == "no"){
+		if(inputWhichList == "arms"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);		
@@ -63,7 +63,7 @@ public class mongodbCRMS {
 			}		
 		}
 		
-		if(inputCrmsList == "no" && inputActivityList == "no"){
+		if(inputWhichList == "relatedStudies"){
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode rootNode = null;	
 			rootNode = mapper.readTree(json);
@@ -83,7 +83,7 @@ public class mongodbCRMS {
 	 * @param inputActivityList decide if anything should be placed into inputActivitiyList(yes or no)
 	 * @param inputCrmsList     decide if anything should be placed into inputCrmsList(yes or no)
 	 */
-	public mongodbCRMS(String database, String Collection, String test, String id, String inputActivityList, String inputCrmsList) throws JsonProcessingException, IOException{	
+	public mongodbCRMS(String database, String Collection, String test, String id, String inputWhichList) throws JsonProcessingException, IOException{	
 		String testId = null;
 		Mongo mongodb = new Mongo("10.137.101.80", 27017);
 		DB db = mongodb.getDB(database);//which database
@@ -95,7 +95,7 @@ public class mongodbCRMS {
 				DBObject o = cursor.next();
 				testId = o.toString();
 				if(testId != null){
-					findEntity(testId, inputActivityList, inputCrmsList);//testing					
+					findEntity(testId, inputWhichList);//testing					
 				}
 			}
 		mongodb.close();
