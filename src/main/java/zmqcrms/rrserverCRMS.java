@@ -234,7 +234,6 @@ public class rrserverCRMS extends rrserver {
 		   		
 		Collections.sort(relatedStudies);
 		if(!relatedStudies.isEmpty()){
-			System.out.println("\r\n");
 			for(int i = 0; i<relatedStudies.size(); i++){
 				String crms_id = (String) relatedStudies.get(i);
 				if(i == relatedStudies.size()-1 && resultString != null)
